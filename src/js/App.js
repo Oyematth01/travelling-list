@@ -61,6 +61,7 @@ export default function App() {
         <div className="auth">
           <h2>Sign Up</h2>
           <AuthForm onSubmit={handleSignUp} />
+          <br></br>
           <h2>Sign In</h2>
           <AuthForm onSubmit={handleSignIn} />
           {error && <p className="error">{error}</p>}
