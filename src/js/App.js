@@ -53,23 +53,25 @@ export default function App() {
   }
 
   function handleSignUp(username, password) {
-    axios.post("/signup", { username, password }).then((response) => {
-      setUser({ username });
-      setError("");
-      navigate("/signin");
-    }).catch((error) => {
-      setError(error.response.data);
-    });
+    axios.post("http://localhost:5000/signup", { username, password })
+      .then((response) => {
+        setUser({ username });
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data);
+      });
   }
 
   function handleSignIn(username, password) {
-    axios.post("/signin", { username, password }).then((response) => {
-      setUser({ username });
-      setError("");
-      navigate("/");
-    }).catch((error) => {
-      setError(error.response.data);
-    });
+    axios.post("http://localhost:5000/signin", { username, password })
+      .then((response) => {
+        setUser({ username });
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.response.data);
+      });
   }
 
   function handleLogout() {
