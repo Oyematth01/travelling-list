@@ -1,27 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import Form from "./Form";
 import PackingList from "./PackingList";
 import Stats from "./Stats";
-import { signUp, signIn } from "./login";
+import axios from "axios";
 
 export default function App() {
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      axios.get(`/items/${user._id}`).then((response) => {
+        setItems(response.data);
+      });
+    }
+  }, [user]);
 
   function handleAddItems(item) {
-    setItems((items) => [...items, item]);
+    axios.post("/items", { ...item, userId: user._id }).then((response) => {
+      setItems((items) => [...items, response.data]);
+    });
   }
 
   function handleDeleteItem(id) {
-    setItems((items) => items.filter((item) => item.id !== id));
+    axios.delete(`/items/${id}`).then(() => {
+      setItems((items) => items.filter((item) => item._id !== id));
+    });
   }
 
   function handleToggleItem(id) {
     setItems((items) =>
       items.map((item) =>
-        item.id === id ? { ...item, packed: !item.packed } : item
+        item._id === id ? { ...item, packed: !item.packed } : item
       )
     );
   }
@@ -31,58 +45,67 @@ export default function App() {
       "Are you sure you want to delete all items?"
     );
 
-    if (confirmed) setItems([]);
+    if (confirmed) {
+      axios.delete(`/items/${user._id}`).then(() => {
+        setItems([]);
+      });
+    }
   }
 
   function handleSignUp(username, password) {
-    const result = signUp(username, password);
-    if (result === "User signed up successfully") {
+    axios.post("/signup", { username, password }).then((response) => {
       setUser({ username });
       setError("");
-    } else {
-      setError(result);
-    }
+      navigate("/signin");
+    }).catch((error) => {
+      setError(error.response.data);
+    });
   }
 
   function handleSignIn(username, password) {
-    const result = signIn(username, password);
-    if (result === "User signed in successfully") {
+    axios.post("/signin", { username, password }).then((response) => {
       setUser({ username });
       setError("");
-    } else {
-      setError(result);
-    }
+      navigate("/");
+    }).catch((error) => {
+      setError(error.response.data);
+    });
+  }
+
+  function handleLogout() {
+    setUser(null);
+    navigate("/signin");
   }
 
   return (
     <div className="app">
       <Logo />
-      {!user ? (
-        <div className="auth">
-          <h2>Sign Up</h2>
-          <AuthForm onSubmit={handleSignUp} />
-          <br></br>
-          <h2>Sign In</h2>
-          <AuthForm onSubmit={handleSignIn} />
-          {error && <p className="error">{error}</p>}
-        </div>
-      ) : (
-        <>
-          <Form onAddItems={handleAddItems} />
-          <PackingList
-            items={items}
-            onDeleteItem={handleDeleteItem}
-            onToggleItem={handleToggleItem}
-            onClearList={handleClearList}
-          />
-          <Stats items={items} />
-        </>
-      )}
+      <Routes>
+        <Route path="/signup" element={<SignUp onSubmit={handleSignUp} error={error} />} />
+        <Route path="/signin" element={<SignIn onSubmit={handleSignIn} error={error} />} />
+        <Route path="/" element={
+          user ? (
+            <>
+              <button className="logout-button" onClick={handleLogout}>Logout</button>
+              <Form onAddItems={handleAddItems} />
+              <PackingList
+                items={items}
+                onDeleteItem={handleDeleteItem}
+                onToggleItem={handleToggleItem}
+                onClearList={handleClearList}
+              />
+              <Stats items={items} />
+            </>
+          ) : (
+            <SignIn onSubmit={handleSignIn} error={error} />
+          )
+        } />
+      </Routes>
     </div>
   );
 }
 
-function AuthForm({ onSubmit }) {
+function SignUp({ onSubmit, error }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -92,20 +115,58 @@ function AuthForm({ onSubmit }) {
   }
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <div className="auth">
+      <h2>Sign Up</h2>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      <p>Already signed up? <Link to="/signin">Login</Link></p>
+    </div>
+  );
+}
+
+function SignIn({ onSubmit, error }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit(username, password);
+  }
+
+  return (
+    <div className="auth">
+      <h2>Sign In</h2>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+    </div>
   );
 }
