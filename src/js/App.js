@@ -14,28 +14,32 @@ export default function App() {
 
   useEffect(() => {
     if (user) {
-      axios.get(`/items/${user._id}`).then((response) => {
+      axios.get(`http://localhost:5000/items/${user._id}`).then((response) => {
         setItems(response.data);
       });
     }
   }, [user]);
 
   function handleAddItems(item) {
-    axios.post("/items", { ...item, userId: user._id }).then((response) => {
+    axios.post("http://localhost:5000/items", { ...item, userId: user._id }).then((response) => {
       setItems((items) => [...items, response.data]);
+    }).catch((error) => {
+      console.error("Error adding item:", error);
     });
   }
 
   function handleDeleteItem(id) {
-    axios.delete(`/items/${id}`).then(() => {
-      setItems((items) => items.filter((item) => item._id !== id));
+    axios.delete(`http://localhost:5000/items/${id}`).then(() => {
+      setItems((items) => items.filter((item) => item.id !== id));
+    }).catch((error) => {
+      console.error("Error deleting item:", error);
     });
   }
 
   function handleToggleItem(id) {
     setItems((items) =>
       items.map((item) =>
-        item._id === id ? { ...item, packed: !item.packed } : item
+        item.id === id ? { ...item, packed: !item.packed } : item
       )
     );
   }
@@ -46,8 +50,10 @@ export default function App() {
     );
 
     if (confirmed) {
-      axios.delete(`/items/${user._id}`).then(() => {
+      axios.delete(`http://localhost:5000/items/${user._id}`).then(() => {
         setItems([]);
+      }).catch((error) => {
+        console.error("Error clearing list:", error);
       });
     }
   }
@@ -96,7 +102,6 @@ export default function App() {
                 items={items}
                 onDeleteItem={handleDeleteItem}
                 onToggleItem={handleToggleItem}
-                onClearList={handleClearList}
               />
               <Stats items={items} />
             </>
@@ -105,72 +110,6 @@ export default function App() {
           )
         } />
       </Routes>
-    </div>
-  );
-}
-
-function SignUp({ onSubmit, error }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSubmit(username, password);
-  }
-
-  return (
-    <div className="auth">
-      <h2>Sign Up</h2>
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      {error && <p className="error">{error}</p>}
-      <p>Already signed up? <Link to="/signin">Login</Link></p>
-    </div>
-  );
-}
-
-function SignIn({ onSubmit, error }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSubmit(username, password);
-  }
-
-  return (
-    <div className="auth">
-      <h2>Sign In</h2>
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      {error && <p className="error">{error}</p>}
-      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
     </div>
   );
 }
