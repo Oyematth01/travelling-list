@@ -6,13 +6,15 @@ export default function Form({ onAddItems }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     if (!description) return;
-
-    const newItem = { description, quantity, packed: false, id: Date.now() };
-
+    
+    const newItem = {
+      description,
+      quantity,
+      packed: false,
+      id: Date.now()
+    };
     onAddItems(newItem);
-
     setDescription("");
     setQuantity(1);
   }
@@ -36,7 +38,7 @@ export default function Form({ onAddItems }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <button>Add</button>
+      <button type="submit">Add</button>
     </form>
   );
 }
