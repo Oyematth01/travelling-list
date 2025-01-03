@@ -57,6 +57,7 @@ export default function App() {
       .then((response) => {
         setUser({ username });
         setError("");
+        navigate("/signin");
       })
       .catch((error) => {
         setError(error.response.data);
@@ -68,6 +69,7 @@ export default function App() {
       .then((response) => {
         setUser({ username });
         setError("");
+        navigate("/");
       })
       .catch((error) => {
         setError(error.response.data);
