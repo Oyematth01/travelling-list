@@ -12,7 +12,7 @@ export default function PackingList({ items, onDeleteItem, onToggleItem }) {
             />
             <span>{item.description}</span>
             <span>({item.quantity})</span>
-            <button onClick={() => onDeleteItem(item.id)}>Delete</button>
+            <button onClick={() => onDeleteItem(item.id)}>❌</button>
           </li>
         ))}
       </ul>
