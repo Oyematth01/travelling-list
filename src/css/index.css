@@ -145,3 +145,20 @@ input[type="checkbox"] {
   border-radius: 1rem;
   color: #fff;
 }
+
+.clear-button {
+  background-color: #ff7e5f;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 1rem;
+}
+
+.clear-button:hover {
+  background-color: #ff6b4d;
+}
