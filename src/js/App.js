@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Link } from "react-router-dom";
 import Logo from "./Logo";
 import Form from "./Form";
 import PackingList from "./PackingList";
@@ -103,6 +103,7 @@ export default function App() {
                 onDeleteItem={handleDeleteItem}
                 onToggleItem={handleToggleItem}
               />
+              <button className="clear-button" onClick={handleClearList}>Clear List</button>
               <Stats items={items} />
             </>
           ) : (
@@ -110,6 +111,72 @@ export default function App() {
           )
         } />
       </Routes>
+    </div>
+  );
+}
+
+function SignUp({ onSubmit, error }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit(username, password);
+  }
+
+  return (
+    <div className="auth">
+      <h2>Sign Up</h2>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      <p>Already signed up? <Link to="/signin">Login</Link></p>
+    </div>
+  );
+}
+
+function SignIn({ onSubmit, error }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit(username, password);
+  }
+
+  return (
+    <div className="auth">
+      <h2>Sign In</h2>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
     </div>
   );
 }
