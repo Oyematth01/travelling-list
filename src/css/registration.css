@@ -10,15 +10,6 @@ body {
   margin: 0;
 }
 
-.container {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 400px;
-  max-width: 100%;
-  font-size: 24px;
-}
 
 h2 {
   text-align: center;
@@ -39,23 +30,10 @@ input {
   font-size: 1rem;
 }
 
-button {
-  padding: 1rem;
-  background: #ff7e5f;
-  border: none;
-  border-radius: 0.5rem;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #ff6b4d;
-}
 
 .error {
   color: red;
   margin-bottom: 1rem;
   text-align: center;
 }
+
