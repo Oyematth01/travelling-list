@@ -59,11 +59,13 @@ The Travelling List Application is a web application designed to help users mana
 
 3. Start the backend server:
 		```sh
-   node server.js
+node server.js
+```
 
 4. Start the frontend development server:
-		```sh
-   npm start
+```sh
+npm start
+```
 
 5. Open your browser and navigate to http://localhost:3000 to view the application.
 
