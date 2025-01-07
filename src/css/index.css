@@ -229,7 +229,7 @@ input[type="checkbox"] {
   .app {
     padding: 2rem 1rem;
     margin: 2rem auto;
-    min-width: 100%;
+    min-width: 80%;
   }
 
   .logout-button {
@@ -238,12 +238,12 @@ input[type="checkbox"] {
 
   .add-form {
     margin-bottom: 1rem;
-    min-width: 100%;
+    min-width: 80%;
   }
 
   .list {
     margin-bottom: 1rem;
-    min-width: 100%;
+    min-width: 80%;
   }
 
   .clear-button {
@@ -260,7 +260,7 @@ input[type="checkbox"] {
   .app {
     padding: 1rem 0.5rem;
     margin: 2rem auto;
-    min-width: 100%;
+    min-width: 80%;
   }
 
   .logout-button {
@@ -269,12 +269,12 @@ input[type="checkbox"] {
 
   .add-form {
     margin-bottom: 0.5rem;
-    min-width: 100%;
+    min-width: 80%;
   }
 
   .list {
     margin-bottom: 0.5rem;
-    min-width: 100%;
+    min-width: 80%;
   }
 
   .clear-button {
