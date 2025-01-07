@@ -17,22 +17,27 @@ body {
   background: #f0f2f5;
   margin: 0;
   padding: 0;
+  overflow: scroll;
 }
 
+
 .app {
-  width: 100%;
-  min-height: 80vh;
-  max-width: 1200px;
-  display: flex;
   background-color: #fff;
+  width: 100%;
+  min-width: 560px;
+  max-width: 560px;
+  min-height: 80vh;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 2rem;
-  padding: 8rem 2rem 2rem;
+  padding: 1rem 1rem 1rem;
   margin: 4rem auto;
   border-radius: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+
 }
 
 
@@ -49,6 +54,28 @@ body {
   transition: background 0.3s;
 }
 
+.logout-button:hover {
+  background-color: #ff6b4d;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  color: #2c3e50;
+  margin-top: 0.5rem;
+}
+.logo-icon {
+  margin-right: 8px;
+}
+
+.logo-text {
+  background: linear-gradient(90deg, #ff7e5f, #ff6b4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 h1 {
   text-align: center;
@@ -138,10 +165,9 @@ input:hover {
 .list ul {
   list-style: none;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   display: flex;
   justify-content: center;
-  align-content: start;
   flex-wrap: wrap;
   gap: 10px 15px;
 }
@@ -201,8 +227,9 @@ input[type="checkbox"] {
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
   .app {
-    padding: 10rem 1rem 1rem;
-    margin: 4rem auto;
+    padding: 2rem 1rem;
+    margin: 2rem auto;
+    min-width: 100%;
   }
 
   .logout-button {
@@ -211,10 +238,12 @@ input[type="checkbox"] {
 
   .add-form {
     margin-bottom: 1rem;
+    min-width: 100%;
   }
 
   .list {
     margin-bottom: 1rem;
+    min-width: 100%;
   }
 
   .clear-button {
@@ -229,8 +258,9 @@ input[type="checkbox"] {
 
 @media (max-width: 480px) {
   .app {
-    padding: 10rem 1 rem 1 rem;
-    margin: 4rem auto;
+    padding: 1rem 0.5rem;
+    margin: 2rem auto;
+    min-width: 100%;
   }
 
   .logout-button {
@@ -239,10 +269,12 @@ input[type="checkbox"] {
 
   .add-form {
     margin-bottom: 0.5rem;
+    min-width: 100%;
   }
 
   .list {
     margin-bottom: 0.5rem;
+    min-width: 100%;
   }
 
   .clear-button {
