@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
 
 .auth {
   font-family: 'Roboto', sans-serif;
@@ -68,3 +59,24 @@ button:hover {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .auth {
+    min-width: 100%;
+    padding: 2rem 1rem;
+  }
+
+  .authForm {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth {
+    min-width: 100%;
+    padding: 1rem 0.5rem;
+  }
+
+  .authForm {
+    min-width: 100%;
+  }
+}
