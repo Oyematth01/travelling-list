@@ -61,22 +61,22 @@ button:hover {
 
 @media (max-width: 768px) {
   .auth {
-    min-width: 100%;
+    min-width: 80%;
     padding: 2rem 1rem;
   }
 
   .authForm {
-    min-width: 100%;
+    min-width: 80%;
   }
 }
 
 @media (max-width: 480px) {
   .auth {
-    min-width: 100%;
+    min-width: 80%;
     padding: 1rem 0.5rem;
   }
 
   .authForm {
-    min-width: 100%;
+    min-width: 80%;
   }
 }
