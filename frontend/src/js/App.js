@@ -8,6 +8,8 @@ import SignUp from "./Signup";
 import SignIn from "./Signin";
 import axios from "axios";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function App() {
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
@@ -16,14 +18,14 @@ export default function App() {
 
   useEffect(() => {
     if (user) {
-      axios.get(`http://localhost:5000/items/${user._id}`).then((response) => {
+      axios.get(`${API_BASE_URL}/items/${user._id}`).then((response) => {
         setItems(response.data);
       });
     }
   }, [user]);
 
   function handleAddItems(item) {
-    axios.post("http://localhost:5000/items", { ...item, userId: user._id }).then((response) => {
+    axios.post(`${API_BASE_URL}/items`, { ...item, userId: user._id }).then((response) => {
       setItems((items) => [...items, response.data]);
     }).catch((error) => {
       console.error("Error adding item:", error);
@@ -31,7 +33,7 @@ export default function App() {
   }
 
   function handleDeleteItem(id) {
-    axios.delete(`http://localhost:5000/items/${id}`).then(() => {
+    axios.delete(`${API_BASE_URL}/items/${id}`).then(() => {
       setItems((items) => items.filter((item) => item.id !== id));
     }).catch((error) => {
       console.error("Error deleting item:", error);
@@ -52,7 +54,7 @@ export default function App() {
     );
 
     if (confirmed) {
-      axios.delete(`http://localhost:5000/items/${user._id}`).then(() => {
+      axios.delete(`${API_BASE_URL}/items/${user._id}`).then(() => {
         setItems([]);
       }).catch((error) => {
         console.error("Error clearing list:", error);
@@ -61,7 +63,7 @@ export default function App() {
   }
 
   function handleSignUp(username, password) {
-    axios.post("http://localhost:5000/signup", { username, password })
+    axios.post(`${API_BASE_URL}/signup`, { username, password })
       .then((response) => {
         setUser({ username });
         setError("");
@@ -73,7 +75,7 @@ export default function App() {
   }
 
   function handleSignIn(username, password) {
-    axios.post("http://localhost:5000/signin", { username, password })
+    axios.post(`${API_BASE_URL}/signin`, { username, password })
       .then((response) => {
         setUser({ username });
         setError("");
